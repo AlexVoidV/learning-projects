@@ -1,4 +1,15 @@
 import dearpygui.dearpygui as dpg
+import math
+
+
+buttons: list[list[str]] = [
+    ["%", "C", "<x", "1/x"],
+    ["x^2", "2√x", "+/-", ","],
+    ["+", "-", "*", "/"],
+    ["9", "0", "/"],
+    ["5", "6", "7", "8"],
+    ["1", "2", "3", "4"],
+]
 
 
 def add(a, b):
@@ -21,14 +32,34 @@ def mod(a, b):
     return a % b
 
 
+def per(a):
+    return a / 100
+
+
+def inv(a):
+    return 1 / a
+
+
+def sqr(a):
+    return a**2
+
+
+def sqrt(a):
+    return math.sqrt(a)
+
+
 def main():
     dpg.create_context()
 
+    # Setup font
+    with dpg.font_registry():
+        default_font: int | str = dpg.add_font("font/Roboto-Medium.ttf", 20)
+
+    dpg.bind_font(default_font)
+
+    # App window
     with dpg.window(tag="Primary Window"):
-        dpg.add_text("Hello, world")
-        dpg.add_button(label="Save")
         dpg.add_input_text(label="string", default_value="Quick brown fox")
-        dpg.add_slider_float(label="float", default_value=0.273, max_value=1)
 
     dpg.create_viewport(title="Calculator App", width=450, height=600)
     dpg.setup_dearpygui()
