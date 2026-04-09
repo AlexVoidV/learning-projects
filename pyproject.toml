@@ -1,0 +1,10 @@
+[project]
+name = "learning-projects"
+version = "0.1.0"
+description = "Pack of personal mini-projects on python for education"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "dearpygui>=2.2",
+    "pytest>=9.0.3",
+]
