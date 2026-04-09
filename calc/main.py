@@ -3,12 +3,12 @@ import math
 
 
 buttons: list[list[str]] = [
-    ["%", "C", "<x", "1/x"],
-    ["x^2", "2√x", "+/-", ","],
-    ["+", "-", "*", "/"],
-    ["9", "0", "/"],
-    ["5", "6", "7", "8"],
-    ["1", "2", "3", "4"],
+    ["%", "C", "<x"],
+    ["1/x", "x^2", "2sqrtx", "/"],
+    ["7", "8", "9", "*"],
+    ["4", "5", "6", "-"],
+    ["1", "2", "3", "+"],
+    ["+/-", "0", ",", "="],
 ]
 
 
@@ -59,7 +59,19 @@ def main():
 
     # App window
     with dpg.window(tag="Primary Window"):
-        dpg.add_input_text(label="string", default_value="Quick brown fox")
+        dpg.add_input_text(
+            tag="display",
+            width=-1,
+            height=30,
+            readonly=True,
+            default_value="0",
+        )
+
+        for row in buttons:
+            with dpg.group(horizontal=True):
+                for btn in row:
+                    btn_width = 70
+                    dpg.add_button(label=btn, width=btn_width)
 
     dpg.create_viewport(title="Calculator App", width=450, height=600)
     dpg.setup_dearpygui()
