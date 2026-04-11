@@ -1,5 +1,7 @@
 import dearpygui.dearpygui as dpg
 import math
+# import decimal
+# import re
 
 
 buttons: list[list[str]] = [
@@ -10,6 +12,19 @@ buttons: list[list[str]] = [
     ["1", "2", "3", "+"],
     ["+/-", "0", ",", "="],
 ]
+
+# TODO: typehints
+# TODO: docstrings
+# TODO: langs dictionary
+# TODO: setup theme?
+# TODO: tests
+
+
+# TODO: callbacks will be here
+def on_button_pressed(sender, app_data, user_data):
+    print(f"sender: {sender}")
+    print(f"app_data: {app_data}")
+    print(f"user_data: {user_data}")
 
 
 def add(a, b):
@@ -71,7 +86,12 @@ def main():
             with dpg.group(horizontal=True):
                 for btn in row:
                     btn_width = 70
-                    dpg.add_button(label=btn, width=btn_width)
+                    dpg.add_button(
+                        label=btn,
+                        width=btn_width,
+                        callback=on_button_pressed,
+                        user_data=btn,
+                    )
 
     dpg.create_viewport(title="Calculator App", width=450, height=600)
     dpg.setup_dearpygui()
