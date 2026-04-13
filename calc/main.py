@@ -4,6 +4,8 @@ import math
 
 # Reference: Windows Calculator.
 
+icon_path = "icon/calculator.ico"
+
 buttons: list[list[str]] = [
     ["%", "C", "<x"],
     ["1/x", "x^2", "2sqrtx", "/"],
@@ -335,7 +337,14 @@ def main():
                             )
                             dpg.bind_item_theme(dpg.last_item(), button_theme)
 
-    dpg.create_viewport(title="Calculator App", width=350, height=550)
+    dpg.create_viewport(
+        title="Calculator App",
+        width=350,
+        height=550,
+        resizable=False,
+        small_icon=icon_path,
+        large_icon=icon_path,
+    )
     dpg.setup_dearpygui()
     dpg.show_viewport()
     dpg.set_primary_window("Primary Window", True)
