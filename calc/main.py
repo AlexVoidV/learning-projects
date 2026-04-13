@@ -194,7 +194,8 @@ def calculate(a: float, b: float, op: str) -> str:
             return "Error"
 
         # Round to 10 decimal places to avoid float precision issues
-        return str(round(result, 10))
+        # :g removes the trailing .0 for integers, but retains the fractional part
+        return f"{round(result, 10):.12g}"
     except OverflowError:
         return "Error"
 
