@@ -30,7 +30,6 @@ last_operand: str = ""
 
 def on_button_pressed(sender, app_data, user_data: str):
     global current_input, first_num, operation, is_eq_pressed, last_operand
-    print(f"Button Data: {user_data}")
     button_data: str = user_data
 
     # Digits (0-9)
@@ -40,7 +39,6 @@ def on_button_pressed(sender, app_data, user_data: str):
             is_eq_pressed = False
         else:
             current_input += button_data
-        print(f"{current_input} - memorized the number!")
         update_display()
 
     # Operators (+, -, *, /)
@@ -225,7 +223,6 @@ def update_calculations(
         all_in_one = f"{first_num} {operation}"
     else:
         all_in_one = ""
-    print(f"Calculations display: {all_in_one}")
     dpg.set_value("calculations", all_in_one)
 
 
