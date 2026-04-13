@@ -277,21 +277,29 @@ def main():
 
     # App window
     with dpg.window(tag="Primary Window"):
+        # Calculations display (top line)
         dpg.add_text(
             default_value="",
             tag="calculations",
         )
+
+        # Main display with increased height
         dpg.add_input_text(
             tag="display",
             width=-1,
-            height=30,
             readonly=True,
             default_value="0",
         )
 
-        # TODO: Buttons must be lower and a bit bigger
-        # TODO: Text fields must be bigger
-        # TODO: Maybe add a style for buttons?
+        # Add vertical spacing before buttons
+        dpg.add_spacer(height=20)
+
+        # Style for buttons
+        with dpg.theme() as button_theme:
+            with dpg.theme_component(dpg.mvButton):
+                dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 5)
+                dpg.add_theme_style(dpg.mvStyleVar_ItemSpacing, 5, 5)
+                dpg.add_theme_style(dpg.mvStyleVar_FramePadding, 10, 10)
 
         with dpg.table(
             header_row=False,
@@ -308,9 +316,11 @@ def main():
                             dpg.add_button(
                                 label=btn,
                                 width=-1,
+                                height=50,
                                 callback=on_button_pressed,
                                 user_data=btn,
                             )
+                            dpg.bind_item_theme(dpg.last_item(), button_theme)
 
     dpg.create_viewport(title="Calculator App", width=350, height=550)
     dpg.setup_dearpygui()
