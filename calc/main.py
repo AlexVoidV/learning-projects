@@ -289,18 +289,30 @@ def main():
             default_value="0",
         )
 
-        for row in buttons:
-            with dpg.group(horizontal=True):
-                for btn in row:
-                    btn_width = 70
-                    dpg.add_button(
-                        label=btn,
-                        width=btn_width,
-                        callback=on_button_pressed,
-                        user_data=btn,
-                    )
+        # TODO: Buttons must be lower and a bit bigger
+        # TODO: Text fields must be bigger
+        # TODO: Maybe add a style for buttons?
 
-    dpg.create_viewport(title="Calculator App", width=450, height=600)
+        with dpg.table(
+            header_row=False,
+            resizable=False,
+            policy=dpg.mvTable_SizingStretchProp,
+        ):
+            for i in range(4):
+                dpg.add_table_column(init_width_or_weight=1.0)
+
+            for row in buttons:
+                with dpg.table_row():
+                    for btn in row:
+                        with dpg.table_cell():
+                            dpg.add_button(
+                                label=btn,
+                                width=-1,
+                                callback=on_button_pressed,
+                                user_data=btn,
+                            )
+
+    dpg.create_viewport(title="Calculator App", width=350, height=550)
     dpg.setup_dearpygui()
     dpg.show_viewport()
     dpg.set_primary_window("Primary Window", True)
