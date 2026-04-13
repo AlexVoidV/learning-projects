@@ -277,22 +277,35 @@ def main():
 
     # App window
     with dpg.window(tag="Primary Window"):
+        # Style for text displays (remove borders)
+        with dpg.theme() as no_border_theme:
+            with dpg.theme_component(dpg.mvInputText):
+                dpg.add_theme_color(dpg.mvThemeCol_Border, (0, 0, 0, 0))
+                dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (0, 0, 0, 0))
+
+        # Larger font for displays
+        with dpg.font_registry():
+            large_font = dpg.add_font("font/Roboto-Medium.ttf", 28)
+
         # Calculations display (top line)
         dpg.add_text(
             default_value="",
             tag="calculations",
         )
 
-        # Main display with increased height
+        # Main display with larger font and no border
         dpg.add_input_text(
             tag="display",
             width=-1,
             readonly=True,
             default_value="0",
         )
+        dpg.bind_item_theme("display", no_border_theme)
+        dpg.bind_item_font("display", large_font)
+        dpg.bind_item_font("calculations", large_font)
 
-        # Add vertical spacing before buttons
-        dpg.add_spacer(height=20)
+        # Add vertical spacing to push buttons to the bottom
+        dpg.add_spacer(height=40)
 
         # Style for buttons
         with dpg.theme() as button_theme:
@@ -316,7 +329,7 @@ def main():
                             dpg.add_button(
                                 label=btn,
                                 width=-1,
-                                height=50,
+                                height=55,
                                 callback=on_button_pressed,
                                 user_data=btn,
                             )
