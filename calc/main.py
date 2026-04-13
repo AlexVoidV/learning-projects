@@ -1,8 +1,5 @@
 import dearpygui.dearpygui as dpg
 import math
-# import decimal
-# import re
-# import typing
 
 
 # Reference: Windows Calculator.
@@ -18,10 +15,6 @@ buttons: list[list[str]] = [
 
 digitals_list: list[str] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 operands_list: list[str] = ["+", "-", "*", "/"]
-
-# TODO: theme (d/n) & other
-# TODO: tests
-# TODO: exceptions
 
 # The currently entered digit or number (default = "0")
 current_input: str = "0"
@@ -128,26 +121,50 @@ def on_button_pressed(sender, app_data, user_data: str):
     # Percentage button
     elif button_data == "%":
         if current_input:
-            current_input = str(per(float(current_input)))
-            update_display()
+            try:
+                current_input = str(per(float(current_input)))
+                update_display()
+            except ValueError, OverflowError:
+                current_input = "Error"
+                update_display()
 
     # Inverse button
     elif button_data == "1/x":
-        if current_input and float(current_input) != 0:
-            current_input = str(inv(float(current_input)))
-            update_display()
+        if current_input:
+            try:
+                val = float(current_input)
+                if val == 0:
+                    current_input = "Error"
+                else:
+                    current_input = str(inv(val))
+                update_display()
+            except ValueError, OverflowError:
+                current_input = "Error"
+                update_display()
 
     # Square button
     elif button_data == "x^2":
         if current_input:
-            current_input = str(sqr(float(current_input)))
-            update_display()
+            try:
+                current_input = str(sqr(float(current_input)))
+                update_display()
+            except ValueError, OverflowError:
+                current_input = "Error"
+                update_display()
 
     # Square root button
     elif button_data == "2sqrtx":
-        if current_input and float(current_input) >= 0:
-            current_input = str(sqrt(float(current_input)))
-            update_display()
+        if current_input:
+            try:
+                val = float(current_input)
+                if val < 0:
+                    current_input = "Error"
+                else:
+                    current_input = str(sqrt(val))
+                update_display()
+            except ValueError, OverflowError:
+                current_input = "Error"
+                update_display()
 
     # Sign change button
     elif button_data == "+/-":
@@ -161,19 +178,27 @@ def on_button_pressed(sender, app_data, user_data: str):
 
 def calculate(a: float, b: float, op: str) -> str:
     """Computes the result and returns a rounded string."""
-    match op:
-        case "+":
-            result = add(a, b)
-        case "-":
-            result = sub(a, b)
-        case "*":
-            result = mul(a, b)
-        case "/":
-            if b == 0:
-                return "Error"
-            result = div(a, b)
-    # Round to 10 decimal places to avoid float precision issues
-    return str(round(result, 10))
+    try:
+        match op:
+            case "+":
+                result = add(a, b)
+            case "-":
+                result = sub(a, b)
+            case "*":
+                result = mul(a, b)
+            case "/":
+                if b == 0:
+                    return "Error"
+                result = div(a, b)
+
+        # Check for infinity or NaN
+        if math.isinf(result) or math.isnan(result):
+            return "Error"
+
+        # Round to 10 decimal places to avoid float precision issues
+        return str(round(result, 10))
+    except OverflowError:
+        return "Error"
 
 
 def update_display():
@@ -225,14 +250,21 @@ def per(a: float) -> float:
 
 
 def inv(a: float) -> float:
+    if a == 0:
+        raise ZeroDivisionError("Cannot divide by zero")
     return 1 / a
 
 
 def sqr(a: float) -> float:
-    return a**2
+    result = a**2
+    if math.isinf(result):
+        raise OverflowError("Result is too large")
+    return result
 
 
 def sqrt(a: float) -> float:
+    if a < 0:
+        raise ValueError("Cannot calculate square root of a negative number")
     return math.sqrt(a)
 
 
