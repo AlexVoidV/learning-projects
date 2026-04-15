@@ -5,6 +5,8 @@ description = "Pack of personal mini-projects on python for education"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "customtkinter>=5.2.2",
     "dearpygui>=2.2",
     "pytest>=9.0.3",
+    "typer>=0.24.1",
 ]
