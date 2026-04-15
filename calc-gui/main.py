@@ -2,7 +2,7 @@ import dearpygui.dearpygui as dpg
 import math
 
 
-# Reference: Windows Calculator.
+# Reference: Windows Calculator
 
 icon_path = "icon/calculator.ico"
 
