@@ -8,4 +8,5 @@ dependencies = [
     "customtkinter>=5.2.2",
     "dearpygui>=2.2",
     "pytest>=9.0.3",
+    "typer>=0.24.1",
 ]
