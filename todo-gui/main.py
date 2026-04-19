@@ -1,1 +1,1 @@
-# import customtkinter
+import customtkinter  # noqa: F401
