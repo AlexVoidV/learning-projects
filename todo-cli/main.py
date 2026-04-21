@@ -2,6 +2,11 @@ import typer
 from rich import print
 import json
 from pathlib import Path
+from time import sleep
+from rich.live import Live
+from rich.text import Text
+# import sys
+# from rich.console import Console
 
 
 app = typer.Typer()
@@ -20,7 +25,27 @@ Use 'ls' to list all your tasks.
 Use 'delete <number>' to delete your task or 'delete 0' to delete all.
 """
 
+WELCOME_TEXT = """
+Welcome to To-Do CLI App!
+"""
+
 # TODO: Docstrings
+
+## First attempt to animate text
+# def typing_print(text):
+#     for char in text:
+#         sys.stdout.write(char)
+#         sys.stdout.flush()
+#         sleep(0.05)
+
+
+def welcome():
+    typing_text = Text()
+
+    with Live(typing_text, refresh_per_second=20):
+        for char in WELCOME_TEXT:
+            typing_text.append(char, style="bold cyan")
+            sleep(0.05)
 
 
 def load_tasks() -> list[str]:
@@ -90,6 +115,7 @@ def delete(
 
 @app.command()
 def help() -> None:
+    welcome()
     print(HELP_TEXT)
 
 
