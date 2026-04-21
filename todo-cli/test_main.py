@@ -20,4 +20,4 @@ def test_add():
 def test_ls():
     result: Result = runner.invoke(app, ["ls"])
     assert result.exit_code == 0
-    assert TEST_TASK in result.output
+    assert f"1. {TEST_TASK}" in result.output

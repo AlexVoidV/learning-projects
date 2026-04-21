@@ -32,7 +32,7 @@ def load_tasks() -> list[str]:
 
 def save_tasks(tasks: list[str]) -> None:
     with open(todo_list, "w", encoding="utf-8") as f:
-        json.dump(tasks, f, ensure_ascii=False, indent=2)
+        json.dump(tasks, f, ensure_ascii=False, indent=4)
 
 
 @app.command()
@@ -45,16 +45,23 @@ def add(task: str = typer.Argument(..., help="Text of new task")) -> None:
 
 @app.command()
 def ls() -> None:
-    if todo_list.exists():
-        with open(todo_list, "r", encoding="utf-8") as f:
-            for i in f:
-                print(i)
-    else:
-        print(
-            MSG_DICT.get(2),
-            "[bold red]File not found![/bold red]",
-            "Use 'add' command to create file and new task.",
-        )
+    try:
+        tasks: list[str] = load_tasks()
+
+        if not tasks:
+            print(
+                MSG_DICT.get(2),
+                "[bold red]File not found![/bold red]",
+                "Use 'add' command to create file and new task.",
+            )
+            return
+
+        print(MSG_DICT.get(1), "Your tasks:")
+        for i, t in enumerate(tasks, 1):
+            print(f"{i}. {t}")
+
+    except json.JSONDecodeError:
+        print(MSG_DICT.get(2), "The file is empty!")
 
 
 @app.command()
