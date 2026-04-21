@@ -122,6 +122,7 @@ def delete(
     if idx == -1:
         tasks.clear()
         save_tasks(tasks)
+        print(MSG_DICT.get(0), "All tasks have been deleted!")
     elif idx < len(tasks):
         removed_task = tasks.pop(idx)
         save_tasks(tasks)
