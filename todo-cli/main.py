@@ -29,17 +29,9 @@ WELCOME_TEXT = """
 Welcome to the To-Do CLI App!
 """
 
-# TODO: Docstrings
 
-## First attempt to animate text
-# def typing_print(text):
-#     for char in text:
-#         sys.stdout.write(char)
-#         sys.stdout.flush()
-#         sleep(0.05)
-
-
-def welcome():
+def welcome() -> None:
+    """**It shows a welcome message with a print animation.**"""
     typing_text = Text()
 
     with Live(typing_text, refresh_per_second=20):
@@ -49,6 +41,11 @@ def welcome():
 
 
 def load_tasks() -> list[str]:
+    """**Loads the task list.**
+
+    Returns:
+        list[str]: An empty or complete task list.
+    """
     if todo_list.exists():
         with open(todo_list, "r", encoding="utf-8") as f:
             return json.load(f)
@@ -56,6 +53,11 @@ def load_tasks() -> list[str]:
 
 
 def save_tasks(tasks: list[str]) -> None:
+    """**Retrieves the task list and saves it.**
+
+    Args:
+        tasks (list[str]): Any list.
+    """
     with open(todo_list, "w", encoding="utf-8") as f:
         json.dump(tasks, f, ensure_ascii=False, indent=4)
 
@@ -64,6 +66,13 @@ def save_tasks(tasks: list[str]) -> None:
 def add(
     task: str = typer.Argument(..., help="The text of the new task"),
 ) -> None:
+    """**Gets one task and adds it to the list.
+    Creates a 'todo_list.json' if it has not been created yet.**
+
+    Args:
+        task (str, optional): Any user input.
+            Defaults to typer.Argument(..., help="The text of the new task").
+    """
     tasks: list[str] = load_tasks()
     tasks.append(task)
     save_tasks(tasks)
@@ -72,6 +81,7 @@ def add(
 
 @app.command()
 def ls() -> None:
+    """**Loads the task list and shows it.**"""
     try:
         tasks: list[str] = load_tasks()
 
@@ -97,6 +107,15 @@ def delete(
         ..., help="The number of the task to delete (from 1)"
     ),
 ) -> None:
+    """**Deletes either one task or all of them. It does not delete the '.json' itself.**
+
+    Args:
+        task_num (int, optional): Any user input from zero and above.
+            Defaults to typer.Argument( ..., help="The number of the task to delete (from 1)" ).
+
+    Raises:
+        typer.Exit: It is called when it is impossible to find the necessary task by the index.
+    """
     tasks: list[str] = load_tasks()
     idx: int = task_num - 1
 
@@ -117,6 +136,7 @@ def delete(
 
 @app.command()
 def help() -> None:
+    """**Shows a welcome message and a list of all the commands.**"""
     welcome()
     print(HELP_TEXT)
 
