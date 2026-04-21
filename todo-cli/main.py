@@ -20,13 +20,13 @@ MSG_DICT: dict[int, str] = {
 }
 
 HELP_TEXT: str = """
-Use 'add <task name>' to create your task-list and add a first task.
-Use 'ls' to list all your tasks.
-Use 'delete <number>' to delete your task or 'delete 0' to delete all.
+Use 'add <task name>' to create a to-do list and a new task.
+Use 'ls' to see the task list.
+Use 'delete' to delete a task, or 'delete' to delete all tasks.
 """
 
 WELCOME_TEXT = """
-Welcome to To-Do CLI App!
+Welcome to the To-Do CLI App!
 """
 
 # TODO: Docstrings
@@ -61,7 +61,9 @@ def save_tasks(tasks: list[str]) -> None:
 
 
 @app.command()
-def add(task: str = typer.Argument(..., help="Text of new task")) -> None:
+def add(
+    task: str = typer.Argument(..., help="The text of the new task"),
+) -> None:
     tasks: list[str] = load_tasks()
     tasks.append(task)
     save_tasks(tasks)
@@ -76,8 +78,8 @@ def ls() -> None:
         if not tasks:
             print(
                 MSG_DICT.get(2),
-                "[bold red]File not found or empty![/bold red]",
-                "Use 'add' command to create file and new task.",
+                "[bold red]The file is either not found or empty![/bold red]",
+                "Use 'add' to create a file and add a task to it.",
             )
             return
 
@@ -92,7 +94,7 @@ def ls() -> None:
 @app.command()
 def delete(
     task_num: int = typer.Argument(
-        ..., help="The number of task for deleting (from 1)"
+        ..., help="The number of the task to delete (from 1)"
     ),
 ) -> None:
     tasks: list[str] = load_tasks()
@@ -104,11 +106,11 @@ def delete(
     elif idx < len(tasks):
         removed_task = tasks.pop(idx)
         save_tasks(tasks)
-        print(MSG_DICT.get(0), f"The task was removed: {removed_task}")
+        print(MSG_DICT.get(0), f"Task deleted: {removed_task}")
     else:
         print(
             MSG_DICT.get(2),
-            f"The task with the number {task_num} is not exist",
+            f"There is no task with {task_num} number",
         )
         raise typer.Exit(code=1)
 
