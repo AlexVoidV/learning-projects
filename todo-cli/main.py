@@ -51,7 +51,7 @@ def ls() -> None:
         if not tasks:
             print(
                 MSG_DICT.get(2),
-                "[bold red]File not found![/bold red]",
+                "[bold red]File not found or empty![/bold red]",
                 "Use 'add' command to create file and new task.",
             )
             return
@@ -73,7 +73,10 @@ def delete(
     tasks: list[str] = load_tasks()
     idx: int = task_num - 1
 
-    if 0 <= idx < len(tasks):
+    if idx == -1:
+        tasks.clear()
+        save_tasks(tasks)
+    elif idx < len(tasks):
         removed_task = tasks.pop(idx)
         save_tasks(tasks)
         print(MSG_DICT.get(0), f"The task was removed: {removed_task}")
