@@ -65,8 +65,24 @@ def ls() -> None:
 
 
 @app.command()
-def delete(task_num: int) -> None:
-    pass
+def delete(
+    task_num: int = typer.Argument(
+        ..., help="The number of task for deleting (from 1)"
+    ),
+) -> None:
+    tasks: list[str] = load_tasks()
+    idx: int = task_num - 1
+
+    if 0 <= idx < len(tasks):
+        removed_task = tasks.pop(idx)
+        save_tasks(tasks)
+        print(MSG_DICT.get(0), f"The task was removed: {removed_task}")
+    else:
+        print(
+            MSG_DICT.get(2),
+            f"The task with the number {task_num} is not exist",
+        )
+        raise typer.Exit(code=1)
 
 
 @app.command()
