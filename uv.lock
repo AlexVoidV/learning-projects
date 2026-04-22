@@ -75,7 +75,7 @@ wheels = [
 
 [[package]]
 name = "learning-projects"
-version = "0.1.0"
+version = "0.18.1"
 source = { virtual = "." }
 dependencies = [
     { name = "customtkinter" },
