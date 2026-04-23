@@ -55,7 +55,10 @@ class App(ctk.CTk):
             side="top",
             expand=True,
         )
-        # TODO: Bind
+        self.entry.bind(
+            "<Return>",
+            lambda e: self._add_task(),
+        )
 
         # Button
         self.add_btn = ctk.CTkButton(
