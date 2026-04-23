@@ -54,7 +54,7 @@ class App(ctk.CTk):
             fill="x",
             padx=(10, 10),
             pady=(14, 14),
-            side="top",
+            side="left",
             expand=True,
         )
         self.entry.bind(
@@ -70,11 +70,11 @@ class App(ctk.CTk):
             command=self._add_task,
             font=("Roboto", 14),
         )
-        self.add_btn.pack(side="right")
+        self.add_btn.pack(side="right", padx=10)
 
         # Scroll frame
         self.scrollable_frame = ctk.CTkScrollableFrame(
-            entry_frame,
+            self,
         )
         self.scrollable_frame.pack(
             fill="both",
@@ -127,6 +127,7 @@ class App(ctk.CTk):
             pady=5,
         )
 
+        # Delete button
         del_btn = ctk.CTkButton(
             frame,
             width=30,
