@@ -15,10 +15,11 @@ class App(ctk.CTk):
 
         self.tasks: list[Any] = []
         self.task_widgets: list[Any] = []
-        self._task_id_counter = 0
+        self._task_id_counter = 1
         self.todo_list = Path("todo_list.json")
 
         self._setup_ui()
+        self._load_tasks()
         self.center_window()
 
     def center_window(window, width=400, height=500):
@@ -129,7 +130,10 @@ class App(ctk.CTk):
         del_btn = ctk.CTkButton(
             frame,
             width=30,
-            fg_color="transparent",
+            fg_color="#336fb0",
+            hover_color="#245487",
+            text="Delete",
+            command=lambda t=task, f=frame: self._delete_task(t, f),
         )
         del_btn.pack(
             side="right",
@@ -149,6 +153,14 @@ class App(ctk.CTk):
 
     def _toggle_task(self, task):
         task["completed"] = not task["completed"]
+        self._save_tasks()
+
+    def _delete_task(self, task, frame):
+        frame.destroy()
+        self.tasks.remove(task)
+        self.task_widgets: list[Any] = [
+            w for w in self.task_widgets if w["data"] != task
+        ]
         self._save_tasks()
 
     def _save_tasks(self):
