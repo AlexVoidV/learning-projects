@@ -82,9 +82,7 @@ class App(ctk.CTk):
             pady=10,
         )
 
-        # TODO: Checkbox widget
-
-        # TODO: Save on close
+        self.protocol("WM_DELETE_WINDOW", self.on_close)
 
     def _add_task(self):
         # Define text
@@ -161,6 +159,19 @@ class App(ctk.CTk):
                 ensure_ascii=False,
                 indent=4,
             )
+
+    def _load_tasks(self):
+        if self.todo_list.exists():
+            with open(self.todo_list, "r", encoding="utf-8") as f:
+                self.tasks: Any = json.load(f)
+            for task in self.tasks:
+                self._render_tasks(task)
+                if task["id"] >= self._task_id_counter:
+                    self._task_id_counter: int = task["id"] + 1
+
+    def on_close(self):
+        self._save_tasks()
+        self.destroy()
 
 
 if __name__ == "__main__":
