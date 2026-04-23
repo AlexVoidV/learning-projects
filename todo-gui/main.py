@@ -21,6 +21,7 @@ class App(ctk.CTk):
         self._setup_ui()
         self._load_tasks()
         self.center_window()
+        self.iconbitmap("icon/check-check.ico")
 
     def center_window(window, width=400, height=500):
         # Get screen dimensions
