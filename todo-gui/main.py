@@ -14,6 +14,7 @@ class App(ctk.CTk):
         ctk.set_appearance_mode("system")
 
         self.tasks: list[Any] = []
+        self.task_widgets: list[Any] = []
         self._task_id_counter = 0
         self.todo_list = Path("todo_list.json")
 
@@ -106,6 +107,7 @@ class App(ctk.CTk):
         self._save_tasks()
 
     def _render_tasks(self, task):
+        # Frame for Checkbox
         frame = ctk.CTkFrame(
             self.scrollable_frame,
         )
@@ -114,15 +116,42 @@ class App(ctk.CTk):
             pady=4,
         )
 
+        # Checkbox for To-Do list of tasks
         tdbox = ctk.CTkCheckBox(
             frame,
             text=task["text"],
+            command=lambda t=task: self._toggle_task(t),
         )
         tdbox.pack(
             side="left",
             padx=8,
             pady=5,
         )
+
+        del_btn = ctk.CTkButton(
+            frame,
+            width=30,
+            fg_color="transparent",
+        )
+        del_btn.pack(
+            side="right",
+            padx=8,
+            pady=5,
+        )
+
+        self.task_widgets.append(
+            {
+                "data": task,
+                "frame": frame,
+                "checkbox": tdbox,
+            }
+        )
+        if task["completed"]:
+            tdbox.select()
+
+    def _toggle_task(self, task):
+        task["completed"] = not task["completed"]
+        self._save_tasks()
 
     def _save_tasks(self):
         with open(self.todo_list, "w", encoding="utf-8") as f:
