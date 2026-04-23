@@ -1,3 +1,25 @@
+## [0.26.0] - 2026-04-23
+
+### 🚀 Features
+
+- Made skeleton of To-Do GUI
+- Added scrollframe
+- Added bind for entry field
+- Added checkbox
+- Added render func
+- Added load (wip)
+- Added delete func
+- Added icon
+
+### 🐛 Bug Fixes
+
+- Small fixes for funcs
+- Fixed view of button and scrollframe
+
+### 📚 Documentation
+
+- CHANGELOG update
+- README update
 ## [0.18.1] - 2026-04-21
 
 ### 🚀 Features
