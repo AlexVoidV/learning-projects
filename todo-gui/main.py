@@ -10,15 +10,15 @@ class App(ctk.CTk):
         super().__init__()
 
         self.title("To-Do")
-        # self.geometry("400x500")
         self.resizable(False, False)
         ctk.set_appearance_mode("system")
 
-        self.tasks = []
+        self.tasks: list[Any] = []
         self._task_id_counter = 0
         self.todo_list = Path("todo_list.json")
 
         self._setup_ui()
+        self.center_window()
 
     def center_window(window, width=400, height=500):
         # Get screen dimensions
@@ -35,19 +35,39 @@ class App(ctk.CTk):
     def _setup_ui(self):
         # Main frame
         entry_frame = ctk.CTkFrame(self)
-        entry_frame.pack(fill="x", padx=20, pady=20)
+        entry_frame.pack(
+            fill="x",
+            padx=20,
+            pady=20,
+        )
 
         # Entry field
         self.entry = ctk.CTkEntry(
-            entry_frame, placeholder_text="New task...", text_color="black"
+            entry_frame,
+            placeholder_text="New task...",
+            text_color="black",
+            font=("Roboto", 14, "italic"),
         )
-        self.entry.pack()
+        self.entry.pack(
+            fill="x",
+            padx=(10, 10),
+            pady=(15, 5),
+        )
+        # TODO: Bind
 
         # Button
         self.add_btn = ctk.CTkButton(
-            entry_frame, text="Add", width=80, command=self._add_task
+            entry_frame,
+            text="Add",
+            width=80,
+            command=self._add_task,
+            font=("Roboto", 14),
         )
         self.add_btn.pack(side="right")
+
+        # TODO: Save on close
+
+        # TODO: Checkbox widget
 
     def _add_task(self):
         # Define text
@@ -69,13 +89,15 @@ class App(ctk.CTk):
         self._save_tasks()
 
     def _save_tasks(self):
-        with open(self.todo_list, "a", encoding="utf-8") as f:
-            self.tasks: Any = json.dump(
-                self.tasks, f, ensure_ascii=False, indent=4
+        with open(self.todo_list, "w", encoding="utf-8") as f:
+            json.dump(
+                self.tasks,
+                f,
+                ensure_ascii=False,
+                indent=4,
             )
 
 
 if __name__ == "__main__":
     app = App()
-    app.center_window()
     app.mainloop()
