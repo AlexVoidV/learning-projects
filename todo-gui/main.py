@@ -71,10 +71,10 @@ class App(ctk.CTk):
         self.add_btn.pack(side="right")
 
         # Scroll frame
-        scrollable_frame = ctk.CTkScrollableFrame(
+        self.scrollable_frame = ctk.CTkScrollableFrame(
             entry_frame,
         )
-        scrollable_frame.pack(
+        self.scrollable_frame.pack(
             fill="both",
             expand=True,
             padx=20,
@@ -101,8 +101,28 @@ class App(ctk.CTk):
 
         self._task_id_counter += 1
         self.tasks.append(task)
+        self._render_tasks(task)
         self.entry.delete(0, "end")
         self._save_tasks()
+
+    def _render_tasks(self, task):
+        frame = ctk.CTkFrame(
+            self.scrollable_frame,
+        )
+        frame.pack(
+            fill="x",
+            pady=4,
+        )
+
+        tdbox = ctk.CTkCheckBox(
+            frame,
+            text=task["text"],
+        )
+        tdbox.pack(
+            side="left",
+            padx=8,
+            pady=5,
+        )
 
     def _save_tasks(self):
         with open(self.todo_list, "w", encoding="utf-8") as f:
