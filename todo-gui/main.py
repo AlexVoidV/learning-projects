@@ -38,7 +38,7 @@ class App(ctk.CTk):
         entry_frame.pack(
             fill="x",
             padx=20,
-            pady=20,
+            pady=(15, 5),
         )
 
         # Entry field
@@ -51,7 +51,9 @@ class App(ctk.CTk):
         self.entry.pack(
             fill="x",
             padx=(10, 10),
-            pady=(15, 5),
+            pady=(14, 14),
+            side="top",
+            expand=True,
         )
         # TODO: Bind
 
@@ -65,9 +67,20 @@ class App(ctk.CTk):
         )
         self.add_btn.pack(side="right")
 
-        # TODO: Save on close
+        # Scroll frame
+        scrollable_frame = ctk.CTkScrollableFrame(
+            entry_frame,
+        )
+        scrollable_frame.pack(
+            fill="both",
+            expand=True,
+            padx=20,
+            pady=10,
+        )
 
         # TODO: Checkbox widget
+
+        # TODO: Save on close
 
     def _add_task(self):
         # Define text
