@@ -35,6 +35,14 @@ class App(ctk.CTk):
         # Set the geometry
         window.geometry(f"{width}x{height}+{x}+{y}")
 
+    def limit_entry(self, *args):
+        if len(self.entry_var.get()) > self.limit:
+            # self.after(0) откладывает изменение на 1 тик цикла → рекурсия обрывается
+            self.after(
+                0,
+                lambda: self.entry_var.set(self.entry_var.get()[: self.limit]),
+            )
+
     def _setup_ui(self):
         # Main frame
         entry_frame = ctk.CTkFrame(self)
@@ -43,6 +51,8 @@ class App(ctk.CTk):
             padx=20,
             pady=(15, 5),
         )
+        self.entry_var = ctk.StringVar()
+        self.limit = 28
 
         # Entry field
         self.entry = ctk.CTkEntry(
@@ -50,6 +60,7 @@ class App(ctk.CTk):
             placeholder_text="New task...",
             text_color="black",
             font=("Roboto", 14, "italic"),
+            textvariable=self.entry_var,
         )
         self.entry.pack(
             fill="x",
@@ -62,6 +73,8 @@ class App(ctk.CTk):
             "<Return>",
             lambda e: self._add_task(),
         )
+
+        self.entry_var.trace_add("write", self.limit_entry)
 
         # Button
         self.add_btn = ctk.CTkButton(
