@@ -110,6 +110,15 @@ class App(ctk.CTk):
         )
         self.cbx_symbols.grid()
 
+        # Label for checkboxes
+        self.cbx_label = ctk.CTkLabel(
+            master=self.main_frame,
+            font=def_font,
+            text="",
+            text_color="#d61854",
+        )
+        self.cbx_label.grid()
+
         # Slider for length of password
         self.slider = ctk.CTkSlider(
             master=self.main_frame,
@@ -143,54 +152,59 @@ class App(ctk.CTk):
 
     # Define app functions
     def gen_passwd(self):
-        # Define variables
-        length: int = int(float(self.slider.get()))
+        try:
+            # Define variables
+            length: int = int(float(self.slider.get()))
 
-        letters_lw: Literal["abcdefghijklmnopqrstuvwxyz"] = (
-            string.ascii_lowercase
-        )
-        letters_up: Literal["ABCDEFGHIJKLMNOPQRSTUVWXYZ"] = (
-            string.ascii_uppercase
-        )
-        digits: Literal["0123456789"] = string.digits
-        symbols: Literal["!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"] = (
-            string.punctuation
-        )
+            letters_lw: Literal["abcdefghijklmnopqrstuvwxyz"] = (
+                string.ascii_lowercase
+            )
+            letters_up: Literal["ABCDEFGHIJKLMNOPQRSTUVWXYZ"] = (
+                string.ascii_uppercase
+            )
+            digits: Literal["0123456789"] = string.digits
+            symbols: Literal["!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"] = (
+                string.punctuation
+            )
 
-        # The minimum password includes
-        passwd: list = []
+            # The minimum password includes
+            passwd: list = []
 
-        if self.upper_var.get():
-            passwd.append(secrets.choice(seq=letters_up))
-        if self.lower_var.get():
-            passwd.append(secrets.choice(seq=letters_lw))
-        if self.digits_var.get():
-            passwd.append(secrets.choice(seq=digits))
-        if self.symbols_var.get():
-            passwd.append(secrets.choice(seq=symbols))
+            if self.upper_var.get():
+                passwd.append(secrets.choice(seq=letters_up))
+            if self.lower_var.get():
+                passwd.append(secrets.choice(seq=letters_lw))
+            if self.digits_var.get():
+                passwd.append(secrets.choice(seq=digits))
+            if self.symbols_var.get():
+                passwd.append(secrets.choice(seq=symbols))
 
-        all_chars = ""
-        if self.upper_var.get():
-            all_chars += letters_up
-        if self.lower_var.get():
-            all_chars += letters_lw
-        if self.digits_var.get():
-            all_chars += digits
-        if self.symbols_var.get():
-            all_chars += symbols
+            all_chars = ""
+            if self.upper_var.get():
+                all_chars += letters_up
+            if self.lower_var.get():
+                all_chars += letters_lw
+            if self.digits_var.get():
+                all_chars += digits
+            if self.symbols_var.get():
+                all_chars += symbols
 
-        # Generate password
-        passwd += [secrets.choice(seq=all_chars) for _ in range(length)]
+            # Generate password
+            passwd += [secrets.choice(seq=all_chars) for _ in range(length)]
 
-        # Random the list
-        secrets.SystemRandom().shuffle(x=passwd)
+            # Random the list
+            secrets.SystemRandom().shuffle(x=passwd)
 
-        # Delete the spaces
-        password: str = "".join(passwd)
+            # Delete the spaces
+            password: str = "".join(passwd)
 
-        # "Return" string
-        self.entry.delete(first_index=0, last_index="end")
-        self.entry.insert(index=0, string=password)
+            # "Return" string
+            self.entry.delete(first_index=0, last_index="end")
+            self.entry.insert(index=0, string=password)
+
+            self.cbx_label.configure(text="")
+        except IndexError:
+            self.cbx_label.configure(text="Select at least one option!")
 
     def upd_slider_info(self, value):
         self.slider_label.configure(text=f"Length: {int(float(value))}")
