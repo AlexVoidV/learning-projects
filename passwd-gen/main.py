@@ -1,8 +1,6 @@
 import customtkinter as ctk
-import json  # noqa: F401
 import secrets
-import string
-from datetime import datetime  # noqa: F401
+import string  # Soon will be deleted
 
 
 # App setup
@@ -44,15 +42,10 @@ class App(ctk.CTk):
             pady=5,
             sticky="nsew",
         )
-        self.main_frame.grid_rowconfigure(index=(0, 1, 2, 3), weight=1)
+        self.main_frame.grid_rowconfigure(index=(0, 1, 2, 3, 4), weight=1)
         self.main_frame.grid_columnconfigure(index=(0, 1, 2), weight=1)
 
-        # TODO: Change this on tooltip sign
-        self.label = ctk.CTkLabel(
-            master=self.main_frame, text="Hello", font=def_font
-        )
-        self.label.grid()
-
+        # Entry field for password
         self.entry = ctk.CTkEntry(
             master=self.main_frame,
             placeholder_text="New password's here...",
@@ -61,6 +54,7 @@ class App(ctk.CTk):
         )
         self.entry.grid()
 
+        # Generate password button
         self.btn = ctk.CTkButton(
             master=self.main_frame,
             text="Generate Password",
@@ -69,12 +63,47 @@ class App(ctk.CTk):
         )
         self.btn.grid()
 
-        self.chkbx = ctk.CTkCheckBox(
+        # Second frame for checkboxes
+        self.cbx_frame = ctk.CTkFrame(
             master=self.main_frame,
-            text="Options",
+        )
+        self.cbx_frame.grid()
+
+        # Options with checkboxes
+        self.cbx_up_case = ctk.CTkCheckBox(
+            master=self.cbx_frame,
+            text="A-Z",
             font=def_font,
         )
-        self.chkbx.grid()
+        self.cbx_up_case.grid()
+
+        self.cbx_lw_case = ctk.CTkCheckBox(
+            master=self.cbx_frame,
+            text="a-z",
+            font=def_font,
+        )
+        self.cbx_lw_case.grid()
+
+        self.cbx_digits = ctk.CTkCheckBox(
+            master=self.cbx_frame,
+            text="0-9",
+            font=def_font,
+        )
+        self.cbx_digits.grid()
+
+        self.cbx_symbols = ctk.CTkCheckBox(
+            master=self.cbx_frame,
+            text="!@#$%^&*_-",
+            font=def_font,
+        )
+        self.cbx_symbols.grid()
+
+        self.cbx_min_pd = ctk.CTkCheckBox(
+            master=self.cbx_frame,
+            text="8:Az0_",
+            font=def_font,
+        )
+        self.cbx_min_pd.grid()
 
         self.slider = ctk.CTkSlider(
             master=self.main_frame,
