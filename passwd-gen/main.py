@@ -57,7 +57,7 @@ class App(ctk.CTk):
             width=400,
         )
 
-        self.entry.grid(row=0, column=0, padx=90, pady=(20, 0), sticky="")
+        self.entry.grid(row=0, column=0, padx=70, pady=(30, 20), sticky="")
 
         # Generate password button
         self.btn = ctk.CTkButton(
@@ -66,7 +66,7 @@ class App(ctk.CTk):
             font=def_font,
             command=self.gen_passwd,
         )
-        self.btn.grid(row=1, column=0)
+        self.btn.grid(row=1, column=0, pady=(0, 50), sticky="")
 
         # Second frame for checkboxes
         self.cbx_frame = ctk.CTkFrame(
@@ -75,8 +75,8 @@ class App(ctk.CTk):
             height=150,
         )
         self.cbx_frame.grid_propagate(flag=False)
-        self.cbx_frame.grid(row=2, column=0, padx=30, sticky="")
-        self.cbx_frame.grid_rowconfigure(index=(0, 1, 2, 3), weight=0)
+        self.cbx_frame.grid(row=2, column=0, padx=40, sticky="")
+        self.cbx_frame.grid_rowconfigure(index=(0, 1, 2, 3), weight=1)
         self.cbx_frame.grid_columnconfigure(index=0, weight=1)
 
         ## Options with checkboxes
@@ -147,7 +147,7 @@ class App(ctk.CTk):
         )
         self.slider_label.grid(row=5, column=0)
 
-    def _center_window(window, width=600, height=700):
+    def _center_window(window, width=550, height=650):
         # Get screen dimensions
         screen_width: int = window.winfo_screenwidth()
         screen_height: int = window.winfo_screenheight()
