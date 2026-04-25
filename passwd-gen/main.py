@@ -43,8 +43,11 @@ class App(ctk.CTk):
             pady=5,
             sticky="nsew",
         )
-        self.main_frame.grid_rowconfigure(index=(0, 1, 2, 3, 4, 5), weight=1)
-        self.main_frame.grid_columnconfigure(index=(0, 1), weight=1)
+        self.main_frame.grid_propagate(flag=False)
+        self.main_frame.grid_columnconfigure(index=0, weight=1)  # Left
+        self.main_frame.grid_columnconfigure(index=(0, 1), weight=0)
+        self.main_frame.grid_columnconfigure(index=2, weight=1)  # Rigth
+        self.main_frame.grid_rowconfigure(index=(0, 1, 2, 3, 4, 5), weight=0)
 
         # Entry field for password
         self.entry = ctk.CTkEntry(
@@ -53,7 +56,8 @@ class App(ctk.CTk):
             font=def_font,
             width=400,
         )
-        self.entry.grid(row=0, column=0)
+
+        self.entry.grid(row=0, column=0, padx=90, pady=(20, 0), sticky="")
 
         # Generate password button
         self.btn = ctk.CTkButton(
@@ -67,11 +71,11 @@ class App(ctk.CTk):
         # Second frame for checkboxes
         self.cbx_frame = ctk.CTkFrame(
             master=self.main_frame,
-            width=100,
-            height=300,
+            width=150,
+            height=150,
         )
         self.cbx_frame.grid_propagate(flag=False)
-        self.cbx_frame.grid(row=2, column=0, padx=30, sticky="ew")
+        self.cbx_frame.grid(row=2, column=0, padx=30, sticky="")
         self.cbx_frame.grid_rowconfigure(index=(0, 1, 2, 3), weight=0)
         self.cbx_frame.grid_columnconfigure(index=0, weight=1)
 
@@ -89,7 +93,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.upper_var,
         )
-        self.cbx_up_case.grid(row=0, column=0)
+        self.cbx_up_case.grid(row=0, column=0, sticky="w")
 
         self.cbx_lw_case = ctk.CTkCheckBox(
             master=self.cbx_frame,
@@ -97,7 +101,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.lower_var,
         )
-        self.cbx_lw_case.grid(row=1, column=0)
+        self.cbx_lw_case.grid(row=1, column=0, sticky="w")
 
         self.cbx_digits = ctk.CTkCheckBox(
             master=self.cbx_frame,
@@ -105,7 +109,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.digits_var,
         )
-        self.cbx_digits.grid(row=2, column=0)
+        self.cbx_digits.grid(row=2, column=0, sticky="w")
 
         self.cbx_symbols = ctk.CTkCheckBox(
             master=self.cbx_frame,
@@ -113,7 +117,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.symbols_var,
         )
-        self.cbx_symbols.grid(row=3, column=0)
+        self.cbx_symbols.grid(row=3, column=0, sticky="w")
 
         # Label for checkboxes
         self.cbx_label = ctk.CTkLabel(
@@ -122,7 +126,7 @@ class App(ctk.CTk):
             text="",
             text_color="#d61854",
         )
-        self.cbx_label.grid()
+        self.cbx_label.grid(row=3, column=0)
 
         # Slider for length of password
         self.slider = ctk.CTkSlider(
@@ -132,7 +136,7 @@ class App(ctk.CTk):
             number_of_steps=22,
             command=self.upd_slider_info,
         )
-        self.slider.grid()
+        self.slider.grid(row=4, column=0)
         self.slider.set(output_value=8)
 
         # Label with slider's value
@@ -141,7 +145,7 @@ class App(ctk.CTk):
             font=def_font,
             text=f"Length: {int(float(self.slider.get()))}",
         )
-        self.slider_label.grid()
+        self.slider_label.grid(row=5, column=0)
 
     def _center_window(window, width=600, height=700):
         # Get screen dimensions
@@ -208,6 +212,7 @@ class App(ctk.CTk):
             self.entry.insert(index=0, string=password)
 
             self.cbx_label.configure(text="")
+
         except IndexError:
             self.cbx_label.configure(text="Select at least one option!")
 
