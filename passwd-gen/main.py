@@ -42,13 +42,25 @@ class App(ctk.CTk):
         )
         self.entry.pack()
 
-        btn = ctk.CTkButton(
+        self.btn = ctk.CTkButton(
             self.main_frame,
             text="Generate Password",
             font=def_font,
             command=self.gen_passwd,
         )
-        btn.pack()
+        self.btn.pack()
+
+        self.chkbx = ctk.CTkCheckBox(self.main_frame, text="Options")
+        self.chkbx.pack()
+
+        self.slider = ctk.CTkSlider(
+            self.main_frame,
+            from_=8,
+            to=30,
+            number_of_steps=22,
+        )
+        self.slider.pack()
+        self.slider.set(8)
 
     def _center_window(window, width=600, height=700):
         # Get screen dimensions
@@ -71,6 +83,9 @@ class App(ctk.CTk):
         passwd: str = "".join(secrets.choice(alphabet) for _ in range(length))
         self.entry.delete(0, "end")
         self.entry.insert(0, passwd)
+
+    # def slider_test(self, value):
+    #     print(f"Value of slider: {value}")
 
 
 if __name__ == "__main__":
