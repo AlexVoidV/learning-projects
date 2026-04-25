@@ -1,7 +1,7 @@
 from typing import Literal
 import customtkinter as ctk
 import secrets
-import string  # Soon will be deleted
+import string
 
 
 # App setup
@@ -43,8 +43,8 @@ class App(ctk.CTk):
             pady=5,
             sticky="nsew",
         )
-        self.main_frame.grid_rowconfigure(index=(0, 1, 2, 3, 4), weight=1)
-        self.main_frame.grid_columnconfigure(index=(0, 1, 2), weight=1)
+        self.main_frame.grid_rowconfigure(index=(0, 1, 2, 3, 4, 5), weight=1)
+        self.main_frame.grid_columnconfigure(index=(0, 1), weight=1)
 
         # Entry field for password
         self.entry = ctk.CTkEntry(
@@ -53,7 +53,7 @@ class App(ctk.CTk):
             font=def_font,
             width=400,
         )
-        self.entry.grid()
+        self.entry.grid(row=0, column=0)
 
         # Generate password button
         self.btn = ctk.CTkButton(
@@ -62,13 +62,18 @@ class App(ctk.CTk):
             font=def_font,
             command=self.gen_passwd,
         )
-        self.btn.grid()
+        self.btn.grid(row=1, column=0)
 
         # Second frame for checkboxes
         self.cbx_frame = ctk.CTkFrame(
             master=self.main_frame,
+            width=100,
+            height=300,
         )
-        self.cbx_frame.grid()
+        self.cbx_frame.grid_propagate(flag=False)
+        self.cbx_frame.grid(row=2, column=0, padx=30, sticky="ew")
+        self.cbx_frame.grid_rowconfigure(index=(0, 1, 2, 3), weight=0)
+        self.cbx_frame.grid_columnconfigure(index=0, weight=1)
 
         ## Options with checkboxes
         # Variables
@@ -84,7 +89,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.upper_var,
         )
-        self.cbx_up_case.grid()
+        self.cbx_up_case.grid(row=0, column=0)
 
         self.cbx_lw_case = ctk.CTkCheckBox(
             master=self.cbx_frame,
@@ -92,7 +97,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.lower_var,
         )
-        self.cbx_lw_case.grid()
+        self.cbx_lw_case.grid(row=1, column=0)
 
         self.cbx_digits = ctk.CTkCheckBox(
             master=self.cbx_frame,
@@ -100,7 +105,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.digits_var,
         )
-        self.cbx_digits.grid()
+        self.cbx_digits.grid(row=2, column=0)
 
         self.cbx_symbols = ctk.CTkCheckBox(
             master=self.cbx_frame,
@@ -108,7 +113,7 @@ class App(ctk.CTk):
             font=def_font,
             variable=self.symbols_var,
         )
-        self.cbx_symbols.grid()
+        self.cbx_symbols.grid(row=3, column=0)
 
         # Label for checkboxes
         self.cbx_label = ctk.CTkLabel(
