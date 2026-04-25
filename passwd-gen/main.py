@@ -158,16 +158,26 @@ class App(ctk.CTk):
         )
 
         # The minimum password includes
-        passwd: list[str] = [
-            secrets.choice(seq=letters_lw),
-            secrets.choice(seq=letters_up),
-            secrets.choice(seq=digits),
-            secrets.choice(seq=symbols),
-        ]
+        passwd: list = []
 
-        all_chars: Literal[
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-        ] = letters_lw + letters_up + digits + symbols
+        if self.upper_var.get():
+            passwd.append(secrets.choice(seq=letters_up))
+        if self.lower_var.get():
+            passwd.append(secrets.choice(seq=letters_lw))
+        if self.digits_var.get():
+            passwd.append(secrets.choice(seq=digits))
+        if self.symbols_var.get():
+            passwd.append(secrets.choice(seq=symbols))
+
+        all_chars = ""
+        if self.upper_var.get():
+            all_chars += letters_up
+        if self.lower_var.get():
+            all_chars += letters_lw
+        if self.digits_var.get():
+            all_chars += digits
+        if self.symbols_var.get():
+            all_chars += symbols
 
         # Generate password
         passwd += [secrets.choice(seq=all_chars) for _ in range(length)]
