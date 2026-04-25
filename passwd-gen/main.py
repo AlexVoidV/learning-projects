@@ -31,16 +31,27 @@ class App(ctk.CTk):
         self.iconbitmap(def_ico_pth)
 
         # App elements setup
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
         self.main_frame = ctk.CTkFrame(self)
-        self.main_frame.pack()
+        self.main_frame.grid(
+            row=0,
+            column=0,
+            padx=20,
+            pady=20,
+            sticky="nsew",
+        )
+        self.main_frame.grid_rowconfigure((0, 1, 2, 3), weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=1)
 
         self.label = ctk.CTkLabel(self.main_frame, text="Hello", font=def_font)
-        self.label.pack()
+        self.label.grid()
 
         self.entry = ctk.CTkEntry(
             self.main_frame, placeholder_text="New password's here..."
         )
-        self.entry.pack()
+        self.entry.grid()
 
         self.btn = ctk.CTkButton(
             self.main_frame,
@@ -48,10 +59,10 @@ class App(ctk.CTk):
             font=def_font,
             command=self.gen_passwd,
         )
-        self.btn.pack()
+        self.btn.grid()
 
         self.chkbx = ctk.CTkCheckBox(self.main_frame, text="Options")
-        self.chkbx.pack()
+        self.chkbx.grid()
 
         self.slider = ctk.CTkSlider(
             self.main_frame,
@@ -59,7 +70,7 @@ class App(ctk.CTk):
             to=30,
             number_of_steps=22,
         )
-        self.slider.pack()
+        self.slider.grid()
         self.slider.set(8)
 
     def _center_window(window, width=600, height=700):
