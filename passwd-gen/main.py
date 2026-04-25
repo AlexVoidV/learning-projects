@@ -1,3 +1,4 @@
+from typing import Literal
 import customtkinter as ctk
 import secrets
 import string  # Soon will be deleted
@@ -50,7 +51,7 @@ class App(ctk.CTk):
             master=self.main_frame,
             placeholder_text="New password's here...",
             font=def_font,
-            width=350,
+            width=400,
         )
         self.entry.grid()
 
@@ -98,13 +99,7 @@ class App(ctk.CTk):
         )
         self.cbx_symbols.grid()
 
-        self.cbx_min_pd = ctk.CTkCheckBox(
-            master=self.cbx_frame,
-            text="8:Az0_",
-            font=def_font,
-        )
-        self.cbx_min_pd.grid()
-
+        # Slider for length of password
         self.slider = ctk.CTkSlider(
             master=self.main_frame,
             from_=8,
@@ -115,6 +110,7 @@ class App(ctk.CTk):
         self.slider.grid()
         self.slider.set(output_value=8)
 
+        # Label with slider's value
         self.slider_label = ctk.CTkLabel(
             master=self.main_frame,
             font=def_font,
@@ -136,15 +132,44 @@ class App(ctk.CTk):
 
     # Define app functions
     def gen_passwd(self):
+        # Define variables
         length: int = int(float(self.slider.get()))
-        alphabet: str = (
-            string.ascii_letters + string.digits + string.punctuation
+
+        letters_lw: Literal["abcdefghijklmnopqrstuvwxyz"] = (
+            string.ascii_lowercase
         )
-        passwd: str = "".join(
-            secrets.choice(seq=alphabet) for _ in range(length)
+        letters_up: Literal["ABCDEFGHIJKLMNOPQRSTUVWXYZ"] = (
+            string.ascii_uppercase
         )
+        digits: Literal["0123456789"] = string.digits
+        symbols: Literal["!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"] = (
+            string.punctuation
+        )
+
+        # The minimum password includes
+        passwd: list[str] = [
+            secrets.choice(seq=letters_lw),
+            secrets.choice(seq=letters_up),
+            secrets.choice(seq=digits),
+            secrets.choice(seq=symbols),
+        ]
+
+        all_chars: Literal[
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+        ] = letters_lw + letters_up + digits + symbols
+
+        # Generate password
+        passwd += [secrets.choice(seq=all_chars) for _ in range(length)]
+
+        # Random the list
+        secrets.SystemRandom().shuffle(x=passwd)
+
+        # Delete the spaces
+        password: str = "".join(passwd)
+
+        # "Return" string
         self.entry.delete(first_index=0, last_index="end")
-        self.entry.insert(index=0, string=passwd)
+        self.entry.insert(index=0, string=password)
 
     def upd_slider_info(self, value):
         self.slider_label.configure(text=f"Length: {int(float(value))}")
