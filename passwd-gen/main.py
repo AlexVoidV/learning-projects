@@ -89,7 +89,7 @@ class App(ctk.CTk):
         self.slider_label = ctk.CTkLabel(
             master=self.main_frame,
             font=def_font,
-            text="Length: 8",  # Not OK, but idk
+            text=f"Length: {int(float(self.slider.get()))}",
         )
         self.slider_label.grid()
 
@@ -107,7 +107,7 @@ class App(ctk.CTk):
 
     # Define app functions
     def gen_passwd(self):
-        length: int = 30
+        length: int = int(float(self.slider.get()))
         alphabet: str = (
             string.ascii_letters + string.digits + string.punctuation
         )
