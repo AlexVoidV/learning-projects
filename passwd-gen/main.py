@@ -70,11 +70,19 @@ class App(ctk.CTk):
         )
         self.cbx_frame.grid()
 
-        # Options with checkboxes
+        ## Options with checkboxes
+        # Variables
+        self.upper_var = ctk.BooleanVar(value=True)
+        self.lower_var = ctk.BooleanVar(value=True)
+        self.digits_var = ctk.BooleanVar(value=True)
+        self.symbols_var = ctk.BooleanVar(value=True)
+
+        # Checkboxes
         self.cbx_up_case = ctk.CTkCheckBox(
             master=self.cbx_frame,
             text="A-Z",
             font=def_font,
+            variable=self.upper_var,
         )
         self.cbx_up_case.grid()
 
@@ -82,6 +90,7 @@ class App(ctk.CTk):
             master=self.cbx_frame,
             text="a-z",
             font=def_font,
+            variable=self.lower_var,
         )
         self.cbx_lw_case.grid()
 
@@ -89,6 +98,7 @@ class App(ctk.CTk):
             master=self.cbx_frame,
             text="0-9",
             font=def_font,
+            variable=self.digits_var,
         )
         self.cbx_digits.grid()
 
@@ -96,6 +106,7 @@ class App(ctk.CTk):
             master=self.cbx_frame,
             text="!@#$%^&*_-",
             font=def_font,
+            variable=self.symbols_var,
         )
         self.cbx_symbols.grid()
 
