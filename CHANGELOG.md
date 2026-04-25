@@ -1,3 +1,39 @@
+## [0.38.0] - 2026-04-25
+
+### 🚀 Features
+
+- Made skeleton of passwd-gen
+- Added checkbox and slider
+- Small changes
+- Small changes
+- More checkboxes
+- Update for generate password func
+- Added variables for checkboxes
+- Added flags for generate password func
+- Start working on UI
+- Suffering on UI
+- Suffering on UI 2
+- Finished UI
+
+### 🐛 Bug Fixes
+
+- Changed from pack to grid
+- Fixed getting value from slider
+- Fixed error with checkboxes options
+
+### 📚 Documentation
+
+- CHANGELOG update
+- README update
+## [0.26.1] - 2026-04-24
+
+### 🐛 Bug Fixes
+
+- Fixed length of task and button shift
+
+### 📚 Documentation
+
+- CHANGELOG update
 ## [0.26.0] - 2026-04-23
 
 ### 🚀 Features
