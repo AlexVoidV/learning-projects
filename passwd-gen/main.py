@@ -126,7 +126,7 @@ class App(ctk.CTk):
             text="",
             text_color="#d61854",
         )
-        self.cbx_label.grid(row=3, column=0)
+        self.cbx_label.grid(row=3, column=0, pady=30)
 
         # Slider for length of password
         self.slider = ctk.CTkSlider(
@@ -145,7 +145,7 @@ class App(ctk.CTk):
             font=def_font,
             text=f"Length: {int(float(self.slider.get()))}",
         )
-        self.slider_label.grid(row=5, column=0)
+        self.slider_label.grid(row=5, column=0, pady=10)
 
     def _center_window(window, width=550, height=650):
         # Get screen dimensions
