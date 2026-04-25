@@ -45,7 +45,7 @@ class App(ctk.CTk):
             sticky="nsew",
         )
         self.main_frame.grid_rowconfigure(index=(0, 1, 2, 3), weight=1)
-        self.main_frame.grid_columnconfigure(index=0, weight=1)
+        self.main_frame.grid_columnconfigure(index=(0, 1, 2), weight=1)
 
         # TODO: Change this on tooltip sign
         self.label = ctk.CTkLabel(
@@ -81,14 +81,17 @@ class App(ctk.CTk):
             from_=8,
             to=30,
             number_of_steps=22,
+            command=self.upd_slider_info,
         )
         self.slider.grid()
         self.slider.set(output_value=8)
 
-        self.slider_value = ctk.CTkLabel(
+        self.slider_label = ctk.CTkLabel(
             master=self.main_frame,
             font=def_font,
+            text="Length: 8",  # Not OK, but idk
         )
+        self.slider_label.grid()
 
     def _center_window(window, width=600, height=700):
         # Get screen dimensions
@@ -114,8 +117,8 @@ class App(ctk.CTk):
         self.entry.delete(first_index=0, last_index="end")
         self.entry.insert(index=0, string=passwd)
 
-    # def slider_test(self, value):
-    #     print(f"Value of slider: {value}")
+    def upd_slider_info(self, value):
+        self.slider_label.configure(text=f"Length: {int(float(value))}")
 
 
 if __name__ == "__main__":
