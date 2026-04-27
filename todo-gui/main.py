@@ -37,7 +37,7 @@ class App(ctk.CTk):
 
     def limit_entry(self, *args):
         if len(self.entry_var.get()) > self.limit:
-            # self.after(0) откладывает изменение на 1 тик цикла → рекурсия обрывается
+            # self.after(0) postpones the change by 1 tick of the loop → recursion ends
             self.after(
                 0,
                 lambda: self.entry_var.set(self.entry_var.get()[: self.limit]),
