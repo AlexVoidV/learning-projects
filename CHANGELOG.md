@@ -1,4 +1,4 @@
-## [0.38.0] - 2026-04-25
+## [0.38.2] - 2026-04-27
 
 ### 🚀 Features
 
@@ -25,6 +25,7 @@
 
 - CHANGELOG update
 - README update
+- CHANGELOG update
 ## [0.26.1] - 2026-04-24
 
 ### 🐛 Bug Fixes
